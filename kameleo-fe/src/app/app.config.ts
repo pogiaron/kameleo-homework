@@ -1,4 +1,9 @@
-import { ApplicationConfig, ErrorHandler, provideBrowserGlobalErrorListeners, provideZonelessChangeDetection } from '@angular/core';
+import {
+  ApplicationConfig,
+  ErrorHandler,
+  provideBrowserGlobalErrorListeners,
+  provideZonelessChangeDetection,
+} from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
@@ -11,16 +16,16 @@ class MyErrorHandler extends ErrorHandler {
     super.handleError(error);
     let toastMessage;
     let toastDescription;
-    if(error instanceof HttpErrorResponse) {
+    if (error instanceof HttpErrorResponse) {
       const apiError = error.error as ApiError;
-      toastMessage = apiError.message
+      toastMessage = apiError.message;
       toastDescription = 'Please try again later...';
-      if(error.status === 0) {
-         toastMessage = 'No internet connection'
+      if (error.status === 0) {
+        toastMessage = 'No internet connection';
         toastDescription = 'Please check you are connected to the internet';
       }
     }
-    if(toastMessage) 
+    if (toastMessage)
       toast(toastMessage, {
         description: toastDescription,
       });
@@ -33,6 +38,6 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(routes),
     provideHttpClient(),
-    {provide: ErrorHandler, useClass: MyErrorHandler}
-  ]
+    { provide: ErrorHandler, useClass: MyErrorHandler },
+  ],
 };
