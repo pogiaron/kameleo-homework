@@ -39,7 +39,7 @@ import { RouterLink } from '@angular/router';
           <a
             hlmNavigationMenuLink
             routerLink="/profiles"
-            class="block px-3 py-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            class="block px-3 py-2 rounded-md hover:bg-gray-100 focus:outline-none"
           >
             Profiles
           </a>
@@ -50,7 +50,7 @@ import { RouterLink } from '@angular/router';
           <a
             hlmNavigationMenuLink
             routerLink="/groups"
-            class="block px-3 py-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            class="block px-3 py-2 rounded-md hover:bg-gray-100 focus:outline-none"
           >
             Groups
           </a>
@@ -61,7 +61,7 @@ import { RouterLink } from '@angular/router';
           <a
             hlmNavigationMenuLink
             routerLink="/api-access"
-            class="block px-3 py-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            class="block px-3 py-2 rounded-md hover:bg-gray-100 focus:outline-none"
           >
             API Access
           </a>
@@ -72,7 +72,7 @@ import { RouterLink } from '@angular/router';
           <a
             hlmNavigationMenuLink
             routerLink="/support"
-            class="block px-3 py-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            class="block px-3 py-2 rounded-md hover:bg-gray-100 focus:outline-none"
           >
             Support
           </a>
@@ -83,9 +83,19 @@ import { RouterLink } from '@angular/router';
           <a
             hlmNavigationMenuLink
             routerLink="/settings"
-            class="block px-3 py-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600"
+            class="block px-3 py-2 rounded-md hover:bg-gray-100 focus:outline-none"
           >
             Settings
+          </a>
+        </li>
+        
+        <li hlmNavigationMenuItem>
+          <a
+            hlmNavigationMenuLink
+            routerLink="/pricing"
+            class="block px-3 py-2 rounded-md hover:bg-gray-100 focus:outline-none"
+          >
+            Pricing
           </a>
         </li>
       </ul>

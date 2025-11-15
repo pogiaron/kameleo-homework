@@ -4,8 +4,30 @@ import { hlm } from '@spartan-ng/helm/utils';
 import type { ClassValue } from 'clsx';
 
 @Directive({
+	selector: 'button[brnTabsTrigger]',
+	exportAs: 'brnTabsTrigger',
+	host: {
+		'[id]': '_labelId()',
+		type: 'button',
+		role: 'tab',
+		'[tabindex]': '_disabled() ? -1 : (selected() ? 0 : -1)',
+		'[attr.aria-selected]': 'selected()',
+		'[attr.aria-controls]': '_contentId()',
+		'[attr.aria-disabled]': '_disabled()',
+		'[attr.data-state]': "selected() ? 'active' : 'inactive'",
+		'[attr.data-orientation]': '_orientation()',
+		'[attr.data-disabled]': "_disabled() ? '' : undefined",
+		'[attr.disabled]': "_disabled() ? '' : undefined",
+		'(click)': 'activate()',
+	},
+})
+export class TabTrigger extends BrnTabsTrigger {
+	override activate() {}
+}
+
+@Directive({
 	selector: '[hlmTabsTrigger]',
-	hostDirectives: [{ directive: BrnTabsTrigger, inputs: ['brnTabsTrigger: hlmTabsTrigger', 'disabled'] }],
+	hostDirectives: [{ directive: TabTrigger, inputs: ['brnTabsTrigger: hlmTabsTrigger', 'disabled'] }],
 	host: {
 		'[class]': '_computedClass()',
 	},

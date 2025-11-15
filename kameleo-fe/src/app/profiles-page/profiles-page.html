@@ -1,0 +1,31 @@
+<hlm-tabs
+      [tab]="currentTab"
+      class="flex flex-col w-full"
+    >
+      <hlm-tabs-list
+        class="flex flex-row border-b border-gray-200 space-x-4"
+        aria-label="Profile settings tabs"
+      >
+        <button hlmTabsTrigger="general" (click)="setCurrentTab('general')" class="py-2 px-3">General</button>
+        <button hlmTabsTrigger="browser" (click)="setCurrentTab('browser')" class="py-2 px-3">Browser</button>
+        <button hlmTabsTrigger="device" (click)="setCurrentTab('device')" class="py-2 px-3">Device</button>
+        <button hlmTabsTrigger="location" (click)="setCurrentTab('location')" class="py-2 px-3">Location</button>
+        <button hlmTabsTrigger="notes" (click)="setCurrentTab('notes')" class="py-2 px-3">Notes</button>
+        <button hlmTabsTrigger="cookies" (click)="setCurrentTab('cookies')" class="py-2 px-3" >Cookies</button>
+      </hlm-tabs-list>
+
+      <!-- Tab content area -->
+      <div class="p-4">
+        <div hlmTabsContent="general">
+            <button (click)="saveGeneral()" hlmBtn>Save</button>
+        </div>
+        <div hlmTabsContent="browser">
+            <button (click)="saveBrowser()" hlmBtn>Save</button>
+        </div>
+        <div hlmTabsContent="device">
+        </div>
+        <div hlmTabsContent="location">Location</div>
+        <div hlmTabsContent="notes">Notes</div>
+        <div hlmTabsContent="cookies">Cookies</div>
+      </div>
+    </hlm-tabs>
