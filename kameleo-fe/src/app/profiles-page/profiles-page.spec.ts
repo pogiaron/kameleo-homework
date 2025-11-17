@@ -54,13 +54,13 @@ describe('ProfilesPage', () => {
 
   it('should display error toast when gets error from the api', async () => {
     mockApi.getSuccess.and.returnValue(
-      of().pipe(tap(() => {throw new Error('test')}))
+      of('test' as any as void).pipe(tap(() => {throw new Error('test')}))
     );
     const element: HTMLElement = fixture.nativeElement;
     const btn = element.querySelector('#general-save')!;
     btn.dispatchEvent(new Event('click'));
+    // jasmine.clock().tick(10);
     const toast = element.querySelector('ngx-sonner-toast');
-    console.log('TEST RUN');
   });
 });
 
