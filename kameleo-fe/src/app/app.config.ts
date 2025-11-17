@@ -33,7 +33,7 @@ export function errorToastAction<T>(
   });
 }
 
-class GlobalErrorHandler extends ErrorHandler {
+export class GlobalErrorHandler extends ErrorHandler {
   override handleError(error: any) {
     super.handleError(error);
     let toastMessage;
