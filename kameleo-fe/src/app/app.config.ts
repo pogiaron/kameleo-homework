@@ -10,20 +10,37 @@ import { routes } from './app.routes';
 import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
 import { toast } from 'ngx-sonner';
 import { ApiError } from './api';
+import { catchError, throwError } from 'rxjs';
 
 interface Action {
   label: string;
   onClick: (event: MouseEvent) => void;
 }
 
-class MyErrorHandler extends ErrorHandler {
+export function errorToastAction<T>(
+  predicate: (error: any) => boolean,
+  toastOverride: { message?: string; description?: string; action?: Action }
+) {
+  return catchError((error) => {
+    if (predicate(error)) {
+      error.error = error.error || {};
+      error.error.action = toastOverride.action;
+      error.toastMessage = toastOverride.message;
+      error.toastDescription = toastOverride.description;
+    }
+
+    return throwError(() => error);
+  });
+}
+
+class GlobalErrorHandler extends ErrorHandler {
   override handleError(error: any) {
     super.handleError(error);
     let toastMessage;
     let toastDescription;
     let toastAction;
     if (error instanceof HttpErrorResponse) {
-      const apiError = error.error as (ApiError & {action?: Action} );
+      const apiError = error.error as ApiError & { action?: Action };
       toastMessage = apiError.message;
       toastDescription = apiError.description;
       toastAction = apiError.action;
@@ -31,11 +48,14 @@ class MyErrorHandler extends ErrorHandler {
         toastMessage = 'No internet connection';
         toastDescription = 'Please check you are connected to the internet';
       }
+    } else {
+      toastMessage = 'Unexpected problem';
+      toastDescription = 'Please create a support ticket';
     }
     if (toastMessage)
-      toast(toastMessage, {
-        description: toastDescription,
-        action: toastAction
+      toast(error.toastMessage ?? toastMessage, {
+        description: error.toastDescription ?? toastDescription,
+        action: toastAction,
       });
   }
 }
@@ -46,6 +66,6 @@ export const appConfig: ApplicationConfig = {
     provideZonelessChangeDetection(),
     provideRouter(routes),
     provideHttpClient(),
-    { provide: ErrorHandler, useClass: MyErrorHandler },
+    { provide: ErrorHandler, useClass: GlobalErrorHandler },
   ],
 };
