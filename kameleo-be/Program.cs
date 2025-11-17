@@ -12,6 +12,7 @@ app.MapGet("/api/demo/error", () =>
     var error = new ApiError(
         Code: "internal_error",
         Message: "An unexpected error occurred.",
+        Description: "Please try again later",
         Timestamp: DateTime.UtcNow
     );
     return Results.Json(error, statusCode: StatusCodes.Status500InternalServerError);
@@ -23,6 +24,7 @@ app.MapGet("/api/demo/upgrade", () =>
     var error = new ApiError(
         Code: "upgrade_required",
         Message: "Your subscription plan does not include this feature. Please upgrade.",
+        Description: "Upgrade your subscription",
         Timestamp: DateTime.UtcNow
     );
     return Results.Json(error, statusCode: StatusCodes.Status402PaymentRequired);
@@ -30,4 +32,4 @@ app.MapGet("/api/demo/upgrade", () =>
 
 app.Run();
 
-record ApiError(string Code, string Message, DateTime Timestamp);
+record ApiError(string Code, string Message, string Description, DateTime Timestamp);

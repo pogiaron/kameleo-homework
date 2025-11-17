@@ -11,15 +11,22 @@ import { HttpErrorResponse, provideHttpClient } from '@angular/common/http';
 import { toast } from 'ngx-sonner';
 import { ApiError } from './api';
 
+interface Action {
+  label: string;
+  onClick: (event: MouseEvent) => void;
+}
+
 class MyErrorHandler extends ErrorHandler {
   override handleError(error: any) {
     super.handleError(error);
     let toastMessage;
     let toastDescription;
+    let toastAction;
     if (error instanceof HttpErrorResponse) {
-      const apiError = error.error as ApiError;
+      const apiError = error.error as (ApiError & {action?: Action} );
       toastMessage = apiError.message;
-      toastDescription = 'Please try again later...';
+      toastDescription = apiError.description;
+      toastAction = apiError.action;
       if (error.status === 0) {
         toastMessage = 'No internet connection';
         toastDescription = 'Please check you are connected to the internet';
@@ -28,6 +35,7 @@ class MyErrorHandler extends ErrorHandler {
     if (toastMessage)
       toast(toastMessage, {
         description: toastDescription,
+        action: toastAction
       });
   }
 }

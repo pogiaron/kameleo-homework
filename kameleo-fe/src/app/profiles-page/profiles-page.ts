@@ -26,16 +26,12 @@ export class ProfilesPage {
         },
         error: (error) => {
           if (error instanceof HttpErrorResponse && error.status === 402) {
-            toast('Insufficient plan', {
-              description: 'Upgrade your subscription to edit cookies',
-              action: {
-                label: 'Upgrade now',
-                onClick: () => this.router.navigate(['/pricing']),
-              },
-            });
-          } else {
-            throw error;
+            error.error.action = {
+              label: 'Upgrade now',
+              onClick: () => this.router.navigate(['/pricing']),
+            };
           }
+          throw error;
         },
       });
     } else {
